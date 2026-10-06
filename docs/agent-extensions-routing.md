@@ -4,9 +4,11 @@
 
 알렉스가 own 한 reusable agent skill 과 fork 떠둔 marketplace skill 의 SSoT 는
 `~/Documents/workspace/personal/agent-extensions/` 다.
-이 폴더가 엄브렐러(umbrella, 우산 컨테이너) 역할을 하고, 안에 자체 git remote 를
-가진 fork 들과 own 한 skill 들이 nested 로 들어 있다.
-글로벌 `~/.claude/skills/` / `~/.codex/skills/` 는 install 스크립트가 거기로
+이 폴더는 스킬 레포들을 모아 둔 폴더일 뿐 git 레포가 아니다 — 폴더에 `git init` 하지
+않는다. 각 스킬 레포가 자기 git·remote 를 갖고, 루트의 `skills.json`·설치기는 버전관리
+없는 파일이다. 히스토리가 필요한 스킬은 자기 레포가 되고, 그 작업의 플랜은 그 레포의
+프로젝트에 둔다(폴더에 플랜 워크트리를 파지 않는다).
+글로벌 `~/.claude/skills/` / `~/.agents/skills/` 는 install 스크립트가 거기로
 심볼릭 링크(symlink, 별칭) 만 거는 미러일 뿐이다.
 
 ### Why
@@ -31,7 +33,7 @@
    - Why: 한 폴더가 모든 own / fork skill 의 단일 진실의 출처(single source of truth).
    - How to apply: 새 보강 패치는 항상 이 폴더 안에서 한다. 다른 위치에 사본 만들지 않는다.
 
-2. 글로벌 `~/.claude/skills/` / `~/.codex/skills/` 직접 수정 금지.
+2. 글로벌 `~/.claude/skills/` / `~/.agents/skills/` 직접 수정 금지.
    - Why: install 스크립트가 만든 symlink 미러일 뿐이라, 직접 수정하면 SSoT 가 둘로 갈라짐.
    - How to apply: agent-extensions 안에서 수정 후 `npm run install:local` 으로 다시 깐다.
 
@@ -89,24 +91,10 @@
    - How to apply: agent-extensions 의 위치 / 이름이 바뀌거나 새 sub 추가 후 한 번 돌린다.
      글로벌 symlink 들이 새 path 로 다시 깔린다.
 
-## Current sub roster (2026-05-11)
+## Roster
 
-| sub | 종류 | upstream | owned remote |
-|---|---|---|---|
-| `alex-core-invariants` | own (standalone repo) | - | `aldegad/alex-core-invariants` |
-| `cmux/` | own (standalone repo) | - | `aldegad/cmux-skills` |
-| `npm-reorg-guard` | own (standalone repo) | - | `aldegad/npm-reorg-guard` |
-| `security-release-gates` | own (standalone repo) | - | `aldegad/security-release-gates` |
-| `elevenlabs-skills/` | fork | `elevenlabs/skills` | `aldegad/elevenlabs-skills` (private) |
-| `k-skill-hwp/` | cherry-picked (nested) | `NomaDamas/k-skill` | umbrella git only |
-| `deep-research-skills/` | nested clone (upstream-tracked) | `Weizhena/Deep-Research-skills` (MIT) | umbrella git only |
-| `content-pipeline` | own (umbrella sub-dir) | - | umbrella git only |
-| `insane-search` | own (umbrella sub-dir) | - | umbrella git only |
-| `skill-hook-authoring` | own (umbrella sub-dir) | - | umbrella git only |
-
-`skills.json` 의 entry 가 본 표의 SSoT 다. 본 페이지의 표는 가독성용 미러이며,
-변경이 잦은 상세는 `skills.json` 을 신뢰한다 (`byteplus-seedance` / `tenstorrent` /
-`tripo-3d-asset` / `gdrive` / `image-gen` 등 추가 sub 포함).
+어떤 스킬이 어느 폴더·레포에서 설치되는지는 `skills.json` 이 유일한 기록이다. 여기에 사본 표를
+두지 않는다.
 
 `skills.json` entry 의 optional 필드 (2026-05-11 추가):
 

@@ -65,7 +65,7 @@ Each rule's rationale, measured evidence, and the failure it was written against
 
 - **One canonical repo path.** Installed copies under the engines' skill roots are
   symlinks or generated config entries. Never edit an installed home copy.
-- **Registration goes through the umbrella manifest `skills.json`, and nothing else.**
+- **Registration goes through the `agent-extensions/skills.json` manifest, and nothing else.**
   Adding a skill = one entry there plus a re-run of `scripts/install/install-local.mjs`.
   Hand-symlinking into an engine root, or adding an engine-config entry, is a second
   registration channel and it drifts.
@@ -150,14 +150,14 @@ concern to the sub-document that owns it.
 ## Recommended Layout
 
 ```text
-agent-extensions/
+agent-extensions/ # a plain folder of skill repos, not a git repo; never `git init` it
  skills.json # the manifest: each skill's id -> canonical path (single registration record)
  scripts/install/install-local.mjs # reads skills.json, generates the engine-root symlinks
  scripts/test/*
  alex-core-invariants/ # standalone repo, own remote
  safedeps/ # standalone repo, own remote
  sprite-gen/ # standalone repo, own remote
- skill-hook-authoring/ # root-owned skill (these conventions)
+ skill-hook-authoring/ # standalone repo, own remote (these conventions)
  katok/ # standalone repo that ALSO builds a binary
  skills/katok/SKILL.md # skills.json path -> this subfolder, so target/ stays out of the scan root
  target/ # build cache (gitignored); never the link target
@@ -166,11 +166,12 @@ agent-extensions/
 
 Three layers, one direction: **conventions** (this skill) → **manifest** (`skills.json`)
 → **installer** (`install-local.mjs`) → generated symlinks. A canonical source may live
-outside the umbrella (a sibling repo); register it with a `../` path so `skills.json`
-stays the one registration record.
+outside the folder (a sibling repo); register it with a `../` path so `skills.json`
+stays the one registration record. A skill that needs history is its own repo; work on it
+is planned in that repo's project, never in the folder.
 
-Keep the umbrella flat. Do not add a repo-local `skills/` or `hooks/` index **in the
-umbrella root** unless there is a specific migration plan, because that creates a second
+Keep the folder flat. Do not add a `skills/` or `hooks/` index **in the folder root**
+unless there is a specific migration plan, because that creates a second
 registration source competing with `skills.json`. This is separate from a standalone
 repo's *own* internal `skills/` layout (e.g. `katok/skills/katok/`), which is that repo's
 upstream structure and a valid link target. If a hook belongs to a standalone repo,
@@ -188,7 +189,7 @@ Before adding or changing a package:
    file, or runtime-native plugin package. Package shapes and trust rules per runtime
    are a lookup (`kind: plugins`); the packaging decision gate we apply to any of them is
    in [`docs/authoring-rules.md`](docs/authoring-rules.md) → *Packaging*.
-4. Update the canonical source first, then its entry in the umbrella manifest
+4. Update the canonical source first, then its entry in the manifest
    `skills.json`, then docs. Do not add a second registration channel alongside it.
 5. Validate discovery in every claimed runtime. For undocumented runtimes, mark support
    as unknown until live verification exists.
@@ -311,7 +312,7 @@ against. The schemas themselves are a lookup (`kind: hooks`).
 - [`docs/hook-contract.md`](docs/hook-contract.md) — cross-engine hook traps, source-cited.
 - [`docs/skill-lifecycle.md`](docs/skill-lifecycle.md) — disable / scope / retire decision table.
 - [`docs/skill-boundary-rules.md`](docs/skill-boundary-rules.md) — skill vs vault: where a piece of truth belongs.
-- [`docs/agent-extensions-routing.md`](docs/agent-extensions-routing.md) — the umbrella repo's routing rules (Korean).
+- [`docs/agent-extensions-routing.md`](docs/agent-extensions-routing.md) — routing rules for the `agent-extensions` folder (Korean).
 - [`docs/research-forge.md`](docs/research-forge.md) — the workflow for document-based skills where a wrong document is worse than none.
 - [`docs/kuma-studio-patterns.md`](docs/kuma-studio-patterns.md) — public Kuma Studio operating patterns.
 - [`docs/cloud-automation.md`](docs/cloud-automation.md) — the weekly source check and its auto-merge gate.

@@ -53,7 +53,7 @@
 - `docs/authoring-rules.md`：每条规则背后的理由与实测事故，以及打包决策关卡。
 - `docs/hook-contract.md`：我们的脚本所针对的跨引擎钩子陷阱。
 - `docs/skill-lifecycle.md`：禁用 / 限定范围 / 退役。
-- `docs/skill-boundary-rules.md`、`docs/research-forge.md`、`docs/agent-extensions-routing.md`、`docs/kuma-studio-patterns.md`：分别说明事实存放在哪里、基于文档的技能如何打磨成形、伞形仓库的路由方式，以及公开的 Kuma Studio 模式。
+- `docs/skill-boundary-rules.md`、`docs/research-forge.md`、`docs/agent-extensions-routing.md`、`docs/kuma-studio-patterns.md`：分别说明事实存放在哪里、基于文档的技能如何打磨成形、`agent-extensions` 文件夹的路由方式，以及公开的 Kuma Studio 模式。
 - `docs/cloud-automation.md`：每周来源检查及其自动合并关卡。
 - `CHANGELOG.md` 加上 git 标签：版本记录。历史记录保留在这里，不写进文档正文。
 

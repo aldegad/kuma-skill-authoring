@@ -53,7 +53,7 @@ Lo que queda aquí es lo que los proveedores no pueden decirte: cómo mantener *
 - `docs/authoring-rules.md`: la justificación y los incidentes medidos detrás de cada regla, y la puerta de decisión sobre el empaquetado.
 - `docs/hook-contract.md`: las trampas de hooks entre motores que nuestros scripts tienen en cuenta.
 - `docs/skill-lifecycle.md`: desactivar, acotar y retirar.
-- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md`: dónde reside la verdad, cómo se forjan las skills basadas en documentos, el enrutamiento del repositorio paraguas y los patrones públicos de Kuma Studio.
+- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md`: dónde reside la verdad, cómo se forjan las skills basadas en documentos, el enrutamiento de la carpeta `agent-extensions` y los patrones públicos de Kuma Studio.
 - `docs/cloud-automation.md`: la comprobación semanal de fuentes y su puerta de fusión automática.
 - `CHANGELOG.md` junto con la etiqueta de git: el registro de versiones. El historial se queda aquí, no en el cuerpo de los documentos.
 

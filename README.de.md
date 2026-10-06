@@ -53,7 +53,7 @@ Was bleibt, ist das, was dir die Hersteller nicht sagen können: wie du *dein* T
 - `docs/authoring-rules.md` — die Begründung und die gemessenen Vorfälle hinter jeder Regel sowie das Entscheidungs-Gate für das Packaging.
 - `docs/hook-contract.md` — die engine-übergreifenden Hook-Fallen, gegen die unsere Skripte geschrieben sind.
 - `docs/skill-lifecycle.md` — deaktivieren / eingrenzen / stilllegen.
-- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md` — wo die Wahrheit liegt, wie dokumentbasierte Skills geschmiedet werden, das Routing des Umbrella-Repos, öffentliche Kuma-Studio-Muster.
+- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md` — wo die Wahrheit liegt, wie dokumentbasierte Skills geschmiedet werden, das Routing des Ordners `agent-extensions`, öffentliche Kuma-Studio-Muster.
 - `docs/cloud-automation.md` — der wöchentliche Quellen-Check und sein Auto-Merge-Gate.
 - `CHANGELOG.md` plus das Git-Tag — der Versionsnachweis. Die Historie bleibt hier, nicht in den Dokumenttexten.
 
