@@ -7,6 +7,9 @@ package manifest, so the **git tag plus this file are the version record**
 
 ## Unreleased — 2026-09-18 — the wiki becomes a lookup
 
+- "Keep history out of doc bodies" now points at the kuma-studio commit gate that enforces it
+  (`npm run lint:instruction-doc-history`); the rule text is unchanged.
+
 The compatibility wiki is retired. Vendor facts are no longer stored in this repository; they are
 looked up on the vendor's page when a question is asked and cited with URL and date
 (`docs/lookup.md`). What stays is ours: the authoring methodology, the umbrella conventions, the

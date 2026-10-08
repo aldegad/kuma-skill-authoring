@@ -107,7 +107,8 @@ Each rule's rationale, measured evidence, and the failure it was written against
 - **Keep history out of doc bodies.** Changelog narrative belongs in `CHANGELOG.md`
   plus the git tag; a doc body states the current truth only. The one exception is a
   *verification* stamp (`verified YYYY-MM-DD`) on a line whose premise is a vendor
-  behaviour — provenance for a live claim.
+  behaviour — provenance for a live claim. kuma-studio enforces this at commit:
+  `npm run lint:instruction-doc-history` (the scanner header owns what counts).
 - **Symlink the wrapper, edit only the canonical file.** When `CLAUDE.md`/`GEMINI.md`
   are symlinks to a repo-owned `AGENTS.md`, every runtime reads the canonical content
   and git stores mode `120000`. Claude Code's Edit/Write refuses to write through a
