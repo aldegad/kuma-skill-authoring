@@ -82,7 +82,7 @@ For `PostToolUse` block (prevent normal post-processing), use `{"decision": "blo
  {
  "matcher": "^Bash$",
  "hooks": [
- { "type": "command", "command": "~/.agents/skills/<id>/scripts/<hook>.sh", "timeout": 30 }
+ { "type": "command", "command": "~/.agents/skills/<id>/bin/<hook>", "timeout": 30 }
  ]
  }
  ],
@@ -90,13 +90,15 @@ For `PostToolUse` block (prevent normal post-processing), use `{"decision": "blo
  {
  "matcher": "^Bash$",
  "hooks": [
- { "type": "command", "command": "~/.agents/skills/<id>/scripts/<hook>.sh", "timeout": 30 }
+ { "type": "command", "command": "~/.agents/skills/<id>/bin/<hook>", "timeout": 30 }
  ]
  }
  ]
  }
 }
 ```
+
+`<hook>` stands for the skill's hook executable — a compiled binary first, by the language order in [`authoring-rules.md`](authoring-rules.md#choosing-the-language-of-a-skills-or-hooks-executable); a Node script with a shebang registers the same way.
 
 Claude `~/.claude/settings.json` uses the same `hooks.PreToolUse[].hooks[]` shape. Idempotent installers should match on the canonical `command` string and skip if already present.
 

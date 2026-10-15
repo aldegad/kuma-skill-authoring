@@ -97,9 +97,12 @@ Each rule's rationale, measured evidence, and the failure it was written against
   verbatim; ship the capability as skill + CLI.
 - **Cross-agent claims come from official vendor docs.** Undocumented = `not
   documented` / `unknown`, never inferred parity. Procedure: [`docs/lookup.md`](docs/lookup.md).
-- **`chmod +x` every hook script and give it a shebang**, and commit the mode
-  (`100755`). A missing exec bit fails with `Permission denied` on every matching event
-  in every session.
+- **Pick an executable's language by how fast it runs: Rust first; Node or Python
+  second, by the ecosystem the job needs; shell last and only as a launcher.** The order,
+  what each language is for and the measurements: [`docs/authoring-rules.md`](docs/authoring-rules.md#choosing-the-language-of-a-skills-or-hooks-executable).
+- **A hook command must run as registered.** A compiled binary is executable as built; a
+  script needs `chmod +x`, a shebang and the mode committed (`100755`). A missing exec bit
+  fails with `Permission denied` on every matching event in every session.
 - **Hook scripts must not assume GNU coreutils.** macOS ships neither `timeout` nor
   `stat -c`; a fail-closed `|| exit 0` turns that into a silent no-op that looks green.
   Detect and degrade (`command -v timeout || gtimeout`), use portable forms
@@ -244,7 +247,8 @@ after the code is gone.
 3. Patch project-local hook config for project guardrails; patch user-level hook config
    only for personal/global guardrails.
 4. Backup mutated JSON config files before writing.
-5. `chmod +x` every hook script before registering it.
+5. Make every hook command runnable before registering it (a built binary, or a script
+   with `chmod +x`).
 6. Validate by feeding representative JSON payloads into the hook scripts — and run the
    script **directly** (`./hook.cjs ...`, no `node` prefix) to catch a missing exec bit
    the way a direct-spawn runtime would.
@@ -298,8 +302,9 @@ against. The schemas themselves are a lookup (`kind: hooks`).
   confirm no parse error.
 - The skill triggers from its frontmatter description.
 - The hook allows normal commands and blocks the intended risky command.
-- The hook script is executable (`chmod +x`, committed as `100755`) and runs directly
-  without a `node` prefix — no `Permission denied`.
+- The hook command runs as registered — a compiled binary, or a script with a shebang
+  committed as `100755` — with no `Permission denied` and no interpreter prefix the engine
+  does not add.
 - The installer is idempotent and can run twice without duplicate hook entries.
 - Config writes are atomic or backup-before-write.
 - Dangerous-mode bypasses are never taught to the agent as automatic retry steps.
