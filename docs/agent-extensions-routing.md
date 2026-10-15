@@ -8,8 +8,8 @@
 않는다. 각 스킬 레포가 자기 git·remote 를 갖고, 루트의 `skills.json`·설치기는 버전관리
 없는 파일이다. 히스토리가 필요한 스킬은 자기 레포가 되고, 그 작업의 플랜은 그 레포의
 프로젝트에 둔다(폴더에 플랜 워크트리를 파지 않는다).
-글로벌 `~/.claude/skills/` / `~/.agents/skills/` 는 install 스크립트가 거기로
-심볼릭 링크(symlink, 별칭) 만 거는 미러일 뿐이다.
+글로벌 `~/.claude/skills/` / `~/.agents/skills/` 는 쿠마 스킬 등록부(`kuma skill`, 기록은
+`~/.kuma/skills/registry.json`)가 거기로 심볼릭 링크(symlink, 별칭) 만 거는 미러일 뿐이다.
 
 ### Why
 
@@ -35,7 +35,8 @@
 
 2. 글로벌 `~/.claude/skills/` / `~/.agents/skills/` 직접 수정 금지.
    - Why: install 스크립트가 만든 symlink 미러일 뿐이라, 직접 수정하면 SSoT 가 둘로 갈라짐.
-   - How to apply: agent-extensions 안에서 수정 후 `npm run install:local` 으로 다시 깐다.
+   - How to apply: agent-extensions 안에서 수정한다. 폴더 소스는 제자리에 링크돼 있어 다시 깔 일이
+     없고, 새 스킬은 `kuma skill install <폴더>` 로 등록한다.
 
 3. boundary: kuma-studio 자체 운영 skill 은 `kuma-studio/skills/`, 그 외는 agent-extensions.
    - Why: kuma-studio 는 GitHub public 이라 외부 fork 코드 들어가면 어색하고 노이즈.
@@ -50,7 +51,8 @@
            해당 fork (`agent-extensions/<fork>/SKILL.md`) 에 patch.
            예: ElevenLabs TTS 호출 룰 → `elevenlabs-skills/text-to-speech/SKILL.md`.
      - (b) alex 만의 신규 절차 →
-           agent-extensions 의 새 own 디렉토리 + `skills.json` 등록.
+           agent-extensions 의 새 own 디렉토리 + `kuma skill install <폴더>` 로 등록 +
+           `skills.json` 에 출처 한 줄.
      - (c) 도메인 어휘 / 카탈로그 (voice_id 리스트, model 비교 등) →
            `~/.kuma/vault/domains/<topic>.md`.
      - (d) 1회성 사건 카드 (trigger / symptom / cause / procedure) →
@@ -76,7 +78,7 @@
      - upstream 파일을 큰 폭으로 리팩터(refactor, 구조 개편) 하지 않는다.
      - 우리 only 추가 파일은 prefix (`SKILL.kuma.md`, `notes.kuma.md` 같이) 로 두면 충돌 0%.
 
-7. 메타 SSoT = `agent-extensions/skills.json`.
+7. 출처 메타 SSoT = `agent-extensions/skills.json` (어디 설치됐는지는 쿠마 등록부가 기록한다).
    - Why: 어떤 sub 가 fork 인지 own 인지, upstream / origin 이 어디인지, 우리 patch 가
      무엇인지를 한 파일에서 본다. 알렉스 안 기억해도 grep 한 번이면 답.
    - How to apply: 각 entry 에 다음 필드 유지.
@@ -86,20 +88,22 @@
      - `patches`: 우리가 박은 보강 한 줄 요약 리스트. lesson promote 시 한 줄 추가.
      - `note`: 자유 메모.
 
-8. install 은 항상 `npm run install:local`.
-   - Why: 자동 backup + 멱등(idempotent) symlink. 디렉토리 위치가 바뀌어도 자동 재계산.
-   - How to apply: agent-extensions 의 위치 / 이름이 바뀌거나 새 sub 추가 후 한 번 돌린다.
-     글로벌 symlink 들이 새 path 로 다시 깔린다.
+8. 스킬 설치는 `kuma skill install`, sub-agent 파일 링크만 `npm run install:local`.
+   - Why: 스킬을 엔진 폴더에 거는 기록과 실행은 쿠마 등록부 하나가 맡는다(2026-10-15,
+     kuma-studio `docs/architecture/skill-registry.md`). 두 설치기가 같은 자리를 다투지 않게 한다.
+   - How to apply: 스킬 폴더 위치나 이름이 바뀌면 `kuma skill uninstall <id>` 후
+     `kuma skill install <새 폴더>`. sub-agent(`agents` 필드)가 바뀌면 `npm run install:local`.
 
 ## Roster
 
-어떤 스킬이 어느 폴더·레포에서 설치되는지는 `skills.json` 이 유일한 기록이다. 여기에 사본 표를
-두지 않는다.
+어떤 스킬이 어느 폴더·레포에서 설치되는지는 쿠마 등록부가 유일한 기록이다(`kuma skill list`).
+`skills.json` 은 출처(remote·patch·sub-agent)를 적는다. 여기에 사본 표를 두지 않는다.
 
 `skills.json` entry 의 optional 필드 (2026-05-11 추가):
 
 - `engines: {claude, codex}` — 엔진별로 다른 skill flavor 를 ship 하는 repo 용 (예:
-  `deep-research-skills` 는 Claude→`research-en`, Codex→`research-codex-en`). 없으면 `path` 를
-  양 엔진에 동일 심링크 (기존 동작).
+  `deep-research-skills` 는 Claude→`research-en`, Codex→`research-codex-en`). 설치는 flavor
+  폴더마다 `kuma skill install <flavor 폴더> --id <id> --engines <엔진>` 로 따로 한다(가져오기는
+  이 경우를 건너뛰고 이유를 알린다).
 - `agents: {claude: [...], codex: [...]}` — skill 이 의존하는 sub-agent 파일/디렉토리를
   `~/.claude/agents/` / `~/.codex/agents/` 로 심링크. `install-local.mjs` 가 처리.

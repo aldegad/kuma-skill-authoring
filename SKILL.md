@@ -65,10 +65,13 @@ Each rule's rationale, measured evidence, and the failure it was written against
 
 - **One canonical repo path.** Installed copies under the engines' skill roots are
   symlinks or generated config entries. Never edit an installed home copy.
-- **Registration goes through the `agent-extensions/skills.json` manifest, and nothing else.**
-  Adding a skill = one entry there plus a re-run of `scripts/install/install-local.mjs`.
-  Hand-symlinking into an engine root, or adding an engine-config entry, is a second
-  registration channel and it drifts.
+- **Registration goes through the Kuma skill registry, and nothing else.** Adding a skill =
+  `kuma skill install <folder|git-url>`: it records the skill in `~/.kuma/skills/registry.json`
+  and links it into every engine's skill folder (or one project's, with `--project <id>`). A
+  folder is linked where it lies, so a skill under development keeps its repo as the canonical
+  source. Hand-symlinking into an engine root, or adding an engine-config entry, is a second
+  registration channel and it drifts; the Extensions panel lists such a folder as unregistered.
+  Design: kuma-studio `docs/architecture/skill-registry.md`.
 - **A repo that also builds artifacts registers its skill subfolder, not its repo root**
   (`<repo>/skills/<name>/`). Runtimes scan the skill root recursively under a traversal
   budget — a `target/`/`node_modules/`/`dist/` swept into the scan can starve discovery
@@ -154,29 +157,32 @@ concern to the sub-document that owns it.
 ## Recommended Layout
 
 ```text
-agent-extensions/ # a plain folder of skill repos, not a git repo; never `git init` it
- skills.json # the manifest: each skill's id -> canonical path (single registration record)
- scripts/install/install-local.mjs # reads skills.json, generates the engine-root symlinks
+~/.kuma/skills/registry.json # the record: each skill's id -> its source (single registration record)
+~/.kuma/skills/store/<id>/ # a git source Kuma fetched; a folder source is linked where it lies
+agent-extensions/ # the owner's plain folder of skill repos, not a git repo; never `git init` it
+ skills.json # provenance only: owned/upstream remotes, patches, sub-agent links — not registration
+ scripts/install/install-local.mjs # links sub-agent files; skills install with `kuma skill install`
  scripts/test/*
  alex-core-invariants/ # standalone repo, own remote
  safedeps/ # standalone repo, own remote
  sprite-gen/ # standalone repo, own remote
  skill-hook-authoring/ # standalone repo, own remote (these conventions)
  katok/ # standalone repo that ALSO builds a binary
- skills/katok/SKILL.md # skills.json path -> this subfolder, so target/ stays out of the scan root
+ skills/katok/SKILL.md # install this subfolder, so target/ stays out of the scan root
  target/ # build cache (gitignored); never the link target
  ../my-agent-girlfriend/ # sibling repo installed via a `../` path (source owned by its own remote)
 ```
 
-Three layers, one direction: **conventions** (this skill) → **manifest** (`skills.json`)
-→ **installer** (`install-local.mjs`) → generated symlinks. A canonical source may live
-outside the folder (a sibling repo); register it with a `../` path so `skills.json`
-stays the one registration record. A skill that needs history is its own repo; work on it
+Three layers, one direction: **conventions** (this skill) → **record** (the registry, through
+`kuma skill`) → generated links. A canonical source may live anywhere (a sibling repo, a
+project); install it by its folder so the registry stays the one registration record.
+`kuma skill import --from agent-extensions` moved the folder's old `skills.json`
+registrations into the registry once (2026-10-15). A skill that needs history is its own repo; work on it
 is planned in that repo's project, never in the folder.
 
 Keep the folder flat. Do not add a `skills/` or `hooks/` index **in the folder root**
 unless there is a specific migration plan, because that creates a second
-registration source competing with `skills.json`. This is separate from a standalone
+registration source competing with the registry. This is separate from a standalone
 repo's *own* internal `skills/` layout (e.g. `katok/skills/katok/`), which is that repo's
 upstream structure and a valid link target. If a hook belongs to a standalone repo,
 reference that repo path directly from the installer and agent config.
@@ -188,13 +194,13 @@ Before adding or changing a package:
 1. Classify the change: skill instruction, hook guard, plugin/extension package,
    installer/config, or docs-only.
 2. Pick the canonical package root and the generated install paths. For a repo that also
-   builds artifacts, the registered `path` is the skill subfolder, not the repo root.
+   builds artifacts, the installed folder is the skill subfolder, not the repo root.
 3. Decide whether each installed artifact is a symlink, generated config entry, copied
    file, or runtime-native plugin package. Package shapes and trust rules per runtime
    are a lookup (`kind: plugins`); the packaging decision gate we apply to any of them is
    in [`docs/authoring-rules.md`](docs/authoring-rules.md) → *Packaging*.
-4. Update the canonical source first, then its entry in the manifest
-   `skills.json`, then docs. Do not add a second registration channel alongside it.
+4. Update the canonical source first, then its registry entry (`kuma skill install`,
+   `kuma skill scope`), then docs. Do not add a second registration channel alongside it.
 5. Validate discovery in every claimed runtime. For undocumented runtimes, mark support
    as unknown until live verification exists.
 
@@ -204,9 +210,9 @@ in the same commit.
 
 ## Disable / Scope / Retire
 
-Three operations, three mechanisms — disabling is **per engine** and never touches
-`skills.json`; scoping to one engine is `engines:` in the manifest and is a claim that
-the skill *cannot run* elsewhere; retiring is the checklist below. Decision table and
+Three operations, three mechanisms — disabling is **per engine** and never touches the
+registry; scoping to some engines is `--engines` / `--exclude-engines` on `kuma skill install`
+and is a claim that the skill *cannot run* elsewhere; retiring is the checklist below. Decision table and
 per-engine mechanics (each row carries its source id):
 [`docs/skill-lifecycle.md`](docs/skill-lifecycle.md).
 
