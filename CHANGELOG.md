@@ -5,6 +5,17 @@ package manifest, so the **git tag plus this file are the version record**
 (the official Claude SKILL.md frontmatter documents only `name` and
 `description`, so the version is intentionally not stamped there).
 
+## Unreleased — 2026-10-15 — the executable's language is chosen by speed
+
+- New rule and section "Choosing The Language Of A Skill's Or Hook's Executable"
+  (`docs/authoring-rules.md`, one line in `SKILL.md` Core Rules): Rust first; Node or Python
+  second, picked by the ecosystem the job needs; shell last and only as a thin launcher. Each
+  language carries what it is for, what it is not for, and start-up times measured on the
+  owner's Mac. Owner decision 2026-10-15 ("rust 를 1순위 node나 python을 2순위로 … 속도순으로").
+- The hook examples (`docs/hook-contract.md`) register a hook executable (`bin/<hook>`)
+  instead of a `.sh` script; the exec-bit rule and the validation checklist now cover a
+  compiled binary as well as a script with a shebang.
+
 ## Unreleased — 2026-09-18 — the wiki becomes a lookup
 
 - "Keep history out of doc bodies" now points at the kuma-studio commit gate that enforces it
