@@ -5,6 +5,18 @@ package manifest, so the **git tag plus this file are the version record**
 (the official Claude SKILL.md frontmatter documents only `name` and
 `description`, so the version is intentionally not stamped there).
 
+## Unreleased — 2026-10-15 — skills register through the Kuma skill registry
+
+- Registration goes through `kuma skill install|uninstall|scope` and its record
+  `~/.kuma/skills/registry.json` (kuma-studio `docs/architecture/skill-registry.md`), not the
+  `agent-extensions/skills.json` manifest. The old rule pointed every Kuma user at a folder that exists
+  on one machine only, so other machines' agents dropped skills straight into the engine roots.
+  Owner decision 2026-10-15 ("유저들이 스킬을 설치하면 ~/.kuma 에 설치하게").
+- `skills.json` stays in the owner's folder as the provenance record (owned and upstream remotes,
+  patches, sub-agent links); `kuma skill import --from agent-extensions` moved its registrations once.
+- Disable / Scope / Verify in `docs/skill-lifecycle.md` now name the registry's verbs
+  (`--engines` / `--exclude-engines`, `kuma skill list`).
+
 ## Unreleased — 2026-10-15 — the executable's language is chosen by speed
 
 - New rule and section "Choosing The Language Of A Skill's Or Hook's Executable"
