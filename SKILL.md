@@ -159,29 +159,25 @@ concern to the sub-document that owns it.
 ```text
 ~/.kuma/skills/registry.json # the record: each skill's id -> its source (single registration record)
 ~/.kuma/skills/store/<id>/ # a git source Kuma fetched; a folder source is linked where it lies
-agent-extensions/ # the owner's plain folder of skill repos, not a git repo; never `git init` it
- skills.json # provenance only: owned/upstream remotes, patches, sub-agent links — not registration
- scripts/install/install-local.mjs # links sub-agent files; skills install with `kuma skill install`
- scripts/test/*
- alex-core-invariants/ # standalone repo, own remote
+~/Documents/workspace/personal/ # the workspace: every skill repo is its own folder here, no umbrella folder
+ kuma-core-invariants/ # standalone repo, own remote
  safedeps/ # standalone repo, own remote
  sprite-gen/ # standalone repo, own remote
  skill-hook-authoring/ # standalone repo, own remote (these conventions)
  katok/ # standalone repo that ALSO builds a binary
  skills/katok/SKILL.md # install this subfolder, so target/ stays out of the scan root
  target/ # build cache (gitignored); never the link target
- ../my-agent-girlfriend/ # sibling repo installed via a `../` path (source owned by its own remote)
+ my-agent-girlfriend/ # a project repo whose skill is installed from its own folder (source owned by its own remote)
 ```
 
 Three layers, one direction: **conventions** (this skill) → **record** (the registry, through
 `kuma skill`) → generated links. A canonical source may live anywhere (a sibling repo, a
 project); install it by its folder so the registry stays the one registration record.
-`kuma skill import --from agent-extensions` moved the folder's old `skills.json`
-registrations into the registry once (2026-10-15). A skill that needs history is its own repo; work on it
-is planned in that repo's project, never in the folder.
+The registry replaced the old hand-kept `skills.json` manifest on 2026-10-15. A skill is its own
+repo; work on it is planned in that repo's project.
 
-Keep the folder flat. Do not add a `skills/` or `hooks/` index **in the folder root**
-unless there is a specific migration plan, because that creates a second
+Keep the workspace flat. Do not add a folder that collects skill repos, or a `skills/` or `hooks/`
+index above them, unless there is a specific migration plan, because that creates a second
 registration source competing with the registry. This is separate from a standalone
 repo's *own* internal `skills/` layout (e.g. `katok/skills/katok/`), which is that repo's
 upstream structure and a valid link target. If a hook belongs to a standalone repo,
@@ -324,7 +320,7 @@ against. The schemas themselves are a lookup (`kind: hooks`).
 - [`docs/hook-contract.md`](docs/hook-contract.md) — cross-engine hook traps, source-cited.
 - [`docs/skill-lifecycle.md`](docs/skill-lifecycle.md) — disable / scope / retire decision table.
 - [`docs/skill-boundary-rules.md`](docs/skill-boundary-rules.md) — skill vs vault: where a piece of truth belongs.
-- [`docs/agent-extensions-routing.md`](docs/agent-extensions-routing.md) — routing rules for the `agent-extensions` folder (Korean).
+- [`docs/skill-repo-routing.md`](docs/skill-repo-routing.md) — where an owned or forked skill's change goes, and how a fork follows upstream (Korean).
 - [`docs/research-forge.md`](docs/research-forge.md) — the workflow for document-based skills where a wrong document is worse than none.
 - [`docs/kuma-studio-patterns.md`](docs/kuma-studio-patterns.md) — public Kuma Studio operating patterns.
 - [`docs/cloud-automation.md`](docs/cloud-automation.md) — the weekly source check and its auto-merge gate.

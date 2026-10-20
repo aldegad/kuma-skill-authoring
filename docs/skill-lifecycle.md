@@ -36,7 +36,7 @@ Decide by asking **why** it should stop.
 Use `--engines` / `--exclude-engines` only when the skill genuinely cannot function elsewhere: it reads an
 engine-native path, requires that engine's feature, or ships an engine-specific flavor.
 Installing it elsewhere would register a skill that can never fire. Record the reason where
-the skill's provenance lives (its README, or `skills.json` `note` in the owner's folder).
+the skill's provenance lives (its README, or the commit that scoped it).
 
 ## Verify
 

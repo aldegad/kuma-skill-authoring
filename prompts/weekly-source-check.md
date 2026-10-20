@@ -14,7 +14,7 @@ or update any prose. You check that every URL still answers, and fix the ones th
 a fresh routine checkout (`~/.kuma/routine-runs/<jobId>/<runId>` or the scheduler's own
 clean checkout) and origin must be `https://github.com/aldegad/skill-hook-authoring.git`.
 Never commit or push from any other checkout — in particular not from the shared
-canonical checkout under `agent-extensions/`.
+canonical checkout in the owner's workspace.
 
 **STEP 1 — check.** Run `node scripts/check-official-sources.mjs --write-report`. It
 validates the manifest shape (ids, `agent`, `kind`, `claims`, hosts in
@@ -42,7 +42,7 @@ HTTP status, and checks `SKILL.md` stays at or under 500 lines.
   `scripts/auto-merge-guard.sh <PR_NUMBER>`. Merge **only** on the guard's exit 0 — never
   by your own judgement. If the guard declines, stop and leave the PR open.
 - After a merge, fast-forward the canonical checkout
-  `~/Documents/workspace/personal/agent-extensions/skill-hook-authoring` to `origin/main`
+  `~/Documents/workspace/personal/skill-hook-authoring` to `origin/main`
   **only if** `git -C <canonical> status --porcelain` is empty and
   `git -C <canonical> merge-base --is-ancestor HEAD origin/main` holds. If either fails,
   report the divergence and do not touch that checkout.

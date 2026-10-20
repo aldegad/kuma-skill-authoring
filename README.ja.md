@@ -53,7 +53,7 @@
 - `docs/authoring-rules.md`：各ルールの根拠と実際に計測されたインシデント、およびパッケージングの判断ゲート。
 - `docs/hook-contract.md`：私たちのスクリプトが対処の前提としている、エンジン間のフックの落とし穴。
 - `docs/skill-lifecycle.md`：無効化 / スコープ限定 / 廃止。
-- `docs/skill-boundary-rules.md`、`docs/research-forge.md`、`docs/agent-extensions-routing.md`、`docs/kuma-studio-patterns.md`：それぞれ、真実をどこで管理するか、ドキュメントベースのスキルをどう練り上げるか、`agent-extensions` フォルダのルーティング、公開されているKuma Studioのパターン。
+- `docs/skill-boundary-rules.md`、`docs/research-forge.md`、`docs/skill-repo-routing.md`、`docs/kuma-studio-patterns.md`：それぞれ、真実をどこで管理するか、ドキュメントベースのスキルをどう練り上げるか、自作またはフォークしたスキルの変更をどのリポジトリに入れるか、公開されているKuma Studioのパターン。
 - `docs/cloud-automation.md`：週次のソースチェックと、その自動マージゲート。
 - `CHANGELOG.md`とgitタグ：バージョンの記録。履歴はドキュメント本文ではなく、ここに残します。
 

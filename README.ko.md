@@ -53,7 +53,7 @@
 - `docs/authoring-rules.md`: 각 규칙의 근거와 실제로 측정된 사고 사례, 그리고 패키징 결정 게이트.
 - `docs/hook-contract.md`: 우리 스크립트가 대비하도록 작성된 크로스 엔진 훅 함정.
 - `docs/skill-lifecycle.md`: 비활성화 / 범위 지정 / 폐기.
-- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md`: 진실이 어디에 있는지, 문서 기반 스킬을 어떻게 다듬는지, `agent-extensions` 폴더의 라우팅, 공개된 Kuma Studio 패턴.
+- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/skill-repo-routing.md`, `docs/kuma-studio-patterns.md`: 진실이 어디에 있는지, 문서 기반 스킬을 어떻게 다듬는지, 직접 만든 스킬이나 포크한 스킬의 변경을 어느 레포에 넣는지, 공개된 Kuma Studio 패턴.
 - `docs/cloud-automation.md`: 주간 출처 검사와 그 자동 머지 게이트.
 - `CHANGELOG.md`와 git 태그: 버전 기록. 이력은 문서 본문이 아니라 여기에 남긴다.
 

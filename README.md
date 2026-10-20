@@ -53,7 +53,7 @@ What stays is what the vendors cannot tell you: how to keep *your* tooling in on
 - `docs/authoring-rules.md` — the rationale and measured incidents behind every rule, and the packaging decision gate.
 - `docs/hook-contract.md` — the cross-engine hook traps our scripts are written against.
 - `docs/skill-lifecycle.md` — disable / scope / retire.
-- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/agent-extensions-routing.md`, `docs/kuma-studio-patterns.md` — where truth lives, how document-based skills are forged, the `agent-extensions` folder's routing, public Kuma Studio patterns.
+- `docs/skill-boundary-rules.md`, `docs/research-forge.md`, `docs/skill-repo-routing.md`, `docs/kuma-studio-patterns.md` — where truth lives, how document-based skills are forged, where an owned or forked skill's change goes, public Kuma Studio patterns.
 - `docs/cloud-automation.md` — the weekly source check and its auto-merge gate.
 - `CHANGELOG.md` plus the git tag — the version record. History stays here, not in the doc bodies.
 

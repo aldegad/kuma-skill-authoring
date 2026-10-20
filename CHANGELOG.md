@@ -5,6 +5,16 @@ package manifest, so the **git tag plus this file are the version record**
 (the official Claude SKILL.md frontmatter documents only `name` and
 `description`, so the version is intentionally not stamped there).
 
+## Unreleased — 2026-10-20 — skill repos sit in the workspace, no umbrella folder
+
+- The owner's skill repos left the `agent-extensions` umbrella folder and each is its own folder in the
+  workspace (`~/Documents/workspace/personal/<name>`); the umbrella is gone, and its hand-kept
+  `skills.json` is archived. Recommended Layout, Core Rules (`docs/authoring-rules.md`), the lifecycle
+  table and the weekly source-check prompt say so; provenance is each repo's own git.
+- `docs/agent-extensions-routing.md` is now `docs/skill-repo-routing.md`: the same rules (boundary,
+  routing tree, upstream follow, fork patch pattern, install through the registry), with the folder and
+  manifest references replaced by "the skill's own repo". The READMEs' doc list follows.
+
 ## Unreleased — 2026-10-15 — skills register through the Kuma skill registry
 
 - Registration goes through `kuma skill install|uninstall|scope` and its record
