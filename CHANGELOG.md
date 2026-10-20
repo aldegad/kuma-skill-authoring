@@ -5,6 +5,14 @@ package manifest, so the **git tag plus this file are the version record**
 (the official Claude SKILL.md frontmatter documents only `name` and
 `description`, so the version is intentionally not stamped there).
 
+## Unreleased — 2026-10-20 — the package is kuma-skill-authoring
+
+- The skill id and the repository are `kuma-skill-authoring` (was `skill-hook-authoring`; the old
+  GitHub URL redirects). Owner decision 2026-10-20: the name now says it is Kuma's authoring
+  contract. The Codex agent card, the weekly source-check prompt (skill call, origin check,
+  canonical checkout `~/Documents/workspace/personal/kuma-skill-authoring`), the scheduler note
+  and the source checker's user agent follow. The rules are unchanged.
+
 ## Unreleased — 2026-10-20 — skill repos sit in the workspace, no umbrella folder
 
 - The owner's skill repos left the `agent-extensions` umbrella folder and each is its own folder in the

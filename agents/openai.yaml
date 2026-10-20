@@ -1,4 +1,4 @@
 interface:
-  display_name: "Skill Hook Authoring"
+  display_name: "Kuma Skill Authoring"
   short_description: "Author shared agent skills, hooks and plugins without drift; look up runtime facts from official docs."
   default_prompt: "Create or update a repo-owned skill, hook, plugin, or extension package; install derived copies without editing them directly; answer any runtime-capability question from the official vendor page via docs/lookup.md and cite it."

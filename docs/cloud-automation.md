@@ -27,7 +27,7 @@ needed it — `docs/lookup.md` §6), and never pushes to `main`.
 ## Where it runs
 
 Kuma Studio's scheduler owns the job (`kuma cron list` → `daily-doc-refresh`, kept under
-its historical id; trigger `0 3 * * 1`, project `skill-hook-authoring`, a fresh routine
+its historical id; trigger `0 3 * * 1`, project `kuma-skill-authoring`, a fresh routine
 worktree per fire). Any scheduler that can run an agent in a clean checkout with `gh`
 credentials works the same way — a Claude Routine (`/schedule`) or a Codex App
 Automation — with the same prompt and the same guard.

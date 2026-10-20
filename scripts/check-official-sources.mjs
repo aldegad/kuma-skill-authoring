@@ -190,7 +190,7 @@ export async function runOfficialSourceCheck({
           redirect: "follow",
           signal: controller.signal,
           headers: {
-            "user-agent": "skill-hook-authoring-official-source-check/1.0"
+            "user-agent": "kuma-skill-authoring-official-source-check/1.0"
           }
         });
         clearTimeout(timeout);

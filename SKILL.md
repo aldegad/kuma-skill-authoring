@@ -1,5 +1,5 @@
 ---
-name: skill-hook-authoring
+name: kuma-skill-authoring
 description: 'Methodology for authoring and shipping one repo-owned source of truth — skills, hooks, slash commands, plugins, installers — across Codex, Claude Code, Grok, Hermes, Antigravity CLI, Cursor and Kuma Studio without drift, plus the lookup discipline for any cross-runtime capability question (an official-source manifest and a fetch-and-cite procedure; no mirrored wiki). Use when authoring, editing, retiring, renaming, disabling/enabling, or debugging a skill / hook / slash-command / plugin; when deciding which engines a skill installs to; when a skill is not triggering and its description needs fixing; or when you need to know what a runtime can do and must cite the vendor page. Triggers (KR/EN): 스킬 작성/수정/폐기/삭제/이름변경, 스킬 끄기/비활성/다시 켜기, 안 쓰는 스킬 정리, 특정 엔진에서만, 스킬 발동 안 됨, description 고치기, 훅 작성, 슬래시 커맨드, 플러그인 패키징, 크로스런타임 호환, 공식 문서 확인; skill authoring/retire/rename/disable/enable, prune unused skills, scope a skill to one engine, skill not triggering, hook authoring, plugin packaging, cross-runtime comparison, look up a runtime capability.'
 ---
 
@@ -163,7 +163,7 @@ concern to the sub-document that owns it.
  kuma-core-invariants/ # standalone repo, own remote
  safedeps/ # standalone repo, own remote
  sprite-gen/ # standalone repo, own remote
- skill-hook-authoring/ # standalone repo, own remote (these conventions)
+ kuma-skill-authoring/ # standalone repo, own remote (these conventions)
  katok/ # standalone repo that ALSO builds a binary
  skills/katok/SKILL.md # install this subfolder, so target/ stays out of the scan root
  target/ # build cache (gitignored); never the link target

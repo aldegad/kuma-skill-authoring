@@ -1,6 +1,6 @@
 # Weekly Official-Source Check
 
-Use `$skill-hook-authoring`.
+Use `$kuma-skill-authoring`.
 
 You are keeping `docs/official-sources.json` — the map of official vendor documentation
 pages this skill looks facts up in — reachable. This runs weekly in a fresh checkout and
@@ -12,7 +12,7 @@ or update any prose. You check that every URL still answers, and fix the ones th
 
 **STEP 0 — where am I.** Run `pwd` and `git remote get-url origin`. The directory must be
 a fresh routine checkout (`~/.kuma/routine-runs/<jobId>/<runId>` or the scheduler's own
-clean checkout) and origin must be `https://github.com/aldegad/skill-hook-authoring.git`.
+clean checkout) and origin must be `https://github.com/aldegad/kuma-skill-authoring.git`.
 Never commit or push from any other checkout — in particular not from the shared
 canonical checkout in the owner's workspace.
 
@@ -42,7 +42,7 @@ HTTP status, and checks `SKILL.md` stays at or under 500 lines.
   `scripts/auto-merge-guard.sh <PR_NUMBER>`. Merge **only** on the guard's exit 0 — never
   by your own judgement. If the guard declines, stop and leave the PR open.
 - After a merge, fast-forward the canonical checkout
-  `~/Documents/workspace/personal/skill-hook-authoring` to `origin/main`
+  `~/Documents/workspace/personal/kuma-skill-authoring` to `origin/main`
   **only if** `git -C <canonical> status --porcelain` is empty and
   `git -C <canonical> merge-base --is-ancestor HEAD origin/main` holds. If either fails,
   report the divergence and do not touch that checkout.
